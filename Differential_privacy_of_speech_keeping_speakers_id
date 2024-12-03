@@ -2,37 +2,37 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "bb360535",
+   "id": "37e4091d",
    "metadata": {
     "papermill": {
-     "duration": 0.007771,
-     "end_time": "2024-12-03T13:02:22.569171",
+     "duration": 0.007134,
+     "end_time": "2024-12-03T18:05:44.965086",
      "exception": false,
-     "start_time": "2024-12-03T13:02:22.561400",
+     "start_time": "2024-12-03T18:05:44.957952",
      "status": "completed"
     },
     "tags": []
    },
    "source": [
-    "# e=.041"
+    "# e=.5"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "45a3193b",
+   "id": "914cbc76",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:02:22.585798Z",
-     "iopub.status.busy": "2024-12-03T13:02:22.584729Z",
-     "iopub.status.idle": "2024-12-03T13:06:45.285767Z",
-     "shell.execute_reply": "2024-12-03T13:06:45.284157Z"
+     "iopub.execute_input": "2024-12-03T18:05:44.980673Z",
+     "iopub.status.busy": "2024-12-03T18:05:44.980110Z",
+     "iopub.status.idle": "2024-12-03T18:10:41.174176Z",
+     "shell.execute_reply": "2024-12-03T18:10:41.173054Z"
     },
     "papermill": {
-     "duration": 262.721236,
-     "end_time": "2024-12-03T13:06:45.297252",
+     "duration": 296.211844,
+     "end_time": "2024-12-03T18:10:41.183815",
      "exception": false,
-     "start_time": "2024-12-03T13:02:22.576016",
+     "start_time": "2024-12-03T18:05:44.971971",
      "status": "completed"
     },
     "tags": []
@@ -43,18 +43,18 @@
      "output_type": "stream",
      "text": [
       "Training accuracy: 1.0000\n",
-      "Validation accuracy: 0.0667\n",
-      "Precision: 0.0635\n",
-      "Recall: 0.0667\n",
-      "F1 Score: 0.0574\n",
+      "Validation accuracy: 0.7783\n",
+      "Precision: 0.8158\n",
+      "Recall: 0.7783\n",
+      "F1 Score: 0.7699\n",
       "Confusion Matrix:\n",
-      "[[0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
+      "[[2 0 0 ... 0 0 0]\n",
+      " [0 2 0 ... 0 0 0]\n",
+      " [0 0 3 ... 0 0 0]\n",
       " ...\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]]\n"
+      " [0 0 0 ... 3 0 0]\n",
+      " [0 0 0 ... 0 2 0]\n",
+      " [0 0 0 ... 0 0 4]]\n"
      ]
     },
     {
@@ -116,7 +116,7 @@
     "X, y = load_data(dataset_path)\n",
     "\n",
     "# Apply Laplacian noise to the MFCC features\n",
-    "epsilon = .041  # Set the value of epsilon for Laplacian noise\n",
+    "epsilon = .5  # Set the value of epsilon for Laplacian noise\n",
     "X_noisy = np.array([apply_laplacian_noise(signal, epsilon) for signal in X])\n",
     "\n",
     "# Encode speaker IDs (labels) as integers\n",
@@ -153,14 +153,123 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "a700334d",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-12-03T18:10:41.199396Z",
+     "iopub.status.busy": "2024-12-03T18:10:41.198209Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.728430Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.727078Z"
+    },
+    "papermill": {
+     "duration": 257.546026,
+     "end_time": "2024-12-03T18:14:58.736286",
+     "exception": false,
+     "start_time": "2024-12-03T18:10:41.190260",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Training accuracy on noisy data: 1.0000\n",
+      "Validation accuracy on noisy data: 0.7783\n",
+      "Precision on noisy data: 0.8158\n",
+      "Recall on noisy data: 0.7783\n",
+      "F1 Score on noisy data: 0.7699\n",
+      "Confusion Matrix on noisy data:\n",
+      "[[2 0 0 ... 0 0 0]\n",
+      " [0 2 0 ... 0 0 0]\n",
+      " [0 0 3 ... 0 0 0]\n",
+      " ...\n",
+      " [0 0 0 ... 3 0 0]\n",
+      " [0 0 0 ... 0 2 0]\n",
+      " [0 0 0 ... 0 0 4]]\n",
+      "\n",
+      "Evaluation on raw audio (no noise applied):\n",
+      "Accuracy: 0.9413\n",
+      "Precision: 0.9437\n",
+      "Recall: 0.9413\n",
+      "F1 Score: 0.9410\n",
+      "Confusion Matrix:\n",
+      "[[20  0  0 ...  0  0  0]\n",
+      " [ 0 18  0 ...  0  0  0]\n",
+      " [ 0  0 19 ...  0  0  0]\n",
+      " ...\n",
+      " [ 0  0  0 ... 20  0  0]\n",
+      " [ 0  0  0 ...  0 20  0]\n",
+      " [ 0  0  0 ...  0  0 20]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Print model's accuracy on noisy data (already computed earlier)\n",
+    "print(f\"Training accuracy on noisy data: {train_accuracy:.4f}\")\n",
+    "print(f\"Validation accuracy on noisy data: {test_accuracy:.4f}\")\n",
+    "print(f\"Precision on noisy data: {precision:.4f}\")\n",
+    "print(f\"Recall on noisy data: {recall:.4f}\")\n",
+    "print(f\"F1 Score on noisy data: {f1:.4f}\")\n",
+    "print(\"Confusion Matrix on noisy data:\")\n",
+    "print(conf_matrix)\n",
+    "\n",
+    "# Load raw audio data (no noise applied)\n",
+    "def load_raw_audio_data(dataset_path):\n",
+    "    X_raw, y_raw = [], []\n",
+    "    for phrase_type in [\"samePhrase\", \"differentPhrase\"]:\n",
+    "        phrase_path = os.path.join(dataset_path, phrase_type)\n",
+    "        if not os.path.exists(phrase_path):\n",
+    "            continue\n",
+    "        for speaker_id in os.listdir(phrase_path):\n",
+    "            speaker_path = os.path.join(phrase_path, speaker_id)\n",
+    "            if not os.path.isdir(speaker_path):\n",
+    "                continue\n",
+    "            for audio_file in os.listdir(speaker_path):\n",
+    "                if audio_file.endswith(\".flac\"):\n",
+    "                    file_path = os.path.join(speaker_path, audio_file)\n",
+    "                    features = extract_features(file_path)\n",
+    "                    if features is not None:\n",
+    "                        X_raw.append(features)\n",
+    "                        y_raw.append(speaker_id)  # Speaker ID is used as the label\n",
+    "    return np.array(X_raw), np.array(y_raw)\n",
+    "\n",
+    "# Load raw audio data\n",
+    "X_raw, y_raw = load_raw_audio_data(dataset_path)\n",
+    "\n",
+    "# Encode speaker IDs for the raw data\n",
+    "y_raw_encoded = label_encoder.transform(y_raw)  # Use the same encoder from training\n",
+    "\n",
+    "# Predict on raw audio data\n",
+    "y_raw_pred = rf_model.predict(X_raw)\n",
+    "\n",
+    "# Evaluate on raw audio data\n",
+    "raw_accuracy = accuracy_score(y_raw_encoded, y_raw_pred)\n",
+    "raw_precision, raw_recall, raw_f1, _ = precision_recall_fscore_support(y_raw_encoded, y_raw_pred, average='weighted')\n",
+    "raw_conf_matrix = confusion_matrix(y_raw_encoded, y_raw_pred)\n",
+    "\n",
+    "# Print the evaluation results for raw data\n",
+    "print(\"\\nEvaluation on raw audio (no noise applied):\")\n",
+    "print(f\"Accuracy: {raw_accuracy:.4f}\")\n",
+    "print(f\"Precision: {raw_precision:.4f}\")\n",
+    "print(f\"Recall: {raw_recall:.4f}\")\n",
+    "print(f\"F1 Score: {raw_f1:.4f}\")\n",
+    "print(\"Confusion Matrix:\")\n",
+    "print(raw_conf_matrix)\n"
+   ]
+  },
+  {
    "cell_type": "markdown",
-   "id": "ff9c9bd4",
+   "id": "67b5230b",
    "metadata": {
     "papermill": {
-     "duration": 0.006519,
-     "end_time": "2024-12-03T13:06:45.310632",
+     "duration": 0.006411,
+     "end_time": "2024-12-03T18:14:58.750498",
      "exception": false,
-     "start_time": "2024-12-03T13:06:45.304113",
+     "start_time": "2024-12-03T18:14:58.744087",
      "status": "completed"
     },
     "tags": []
@@ -171,148 +280,118 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "3a178c47",
+   "execution_count": 3,
+   "id": "49625340",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:06:45.328468Z",
-     "iopub.status.busy": "2024-12-03T13:06:45.327833Z",
-     "iopub.status.idle": "2024-12-03T13:10:34.319140Z",
-     "shell.execute_reply": "2024-12-03T13:10:34.317695Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.766076Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.765140Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.772381Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.771291Z"
     },
     "papermill": {
-     "duration": 229.011459,
-     "end_time": "2024-12-03T13:10:34.329024",
+     "duration": 0.017461,
+     "end_time": "2024-12-03T18:14:58.774538",
      "exception": false,
-     "start_time": "2024-12-03T13:06:45.317565",
+     "start_time": "2024-12-03T18:14:58.757077",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Training accuracy: 1.0000\n",
-      "Validation accuracy: 0.0800\n",
-      "Precision: 0.0769\n",
-      "Recall: 0.0800\n",
-      "F1 Score: 0.0672\n",
-      "Confusion Matrix:\n",
-      "[[1 0 0 ... 0 0 0]\n",
-      " [2 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " ...\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]]\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n",
-      "  _warn_prf(average, modifier, msg_start, len(result))\n",
-      "/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.\n",
-      "  _warn_prf(average, modifier, msg_start, len(result))\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
-    "import os\n",
-    "import numpy as np\n",
-    "import soundfile as sf\n",
-    "from sklearn.preprocessing import LabelEncoder\n",
-    "from sklearn.model_selection import train_test_split\n",
-    "from sklearn.ensemble import RandomForestClassifier\n",
-    "from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support\n",
-    "import librosa\n",
+    "# import os\n",
+    "# import numpy as np\n",
+    "# import soundfile as sf\n",
+    "# from sklearn.preprocessing import LabelEncoder\n",
+    "# from sklearn.model_selection import train_test_split\n",
+    "# from sklearn.ensemble import RandomForestClassifier\n",
+    "# from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support\n",
+    "# import librosa\n",
     "\n",
-    "def extract_features(file_path, n_mfcc=13):\n",
-    "    \"\"\"Extract MFCC features from an audio file.\"\"\"\n",
-    "    audio_signal, sample_rate = sf.read(file_path)\n",
-    "    mfccs = librosa.feature.mfcc(y=audio_signal, sr=sample_rate, n_mfcc=n_mfcc)\n",
-    "    return np.mean(mfccs.T, axis=0)  # Use the mean of MFCCs over time\n",
+    "# def extract_features(file_path, n_mfcc=13):\n",
+    "#     \"\"\"Extract MFCC features from an audio file.\"\"\"\n",
+    "#     audio_signal, sample_rate = sf.read(file_path)\n",
+    "#     mfccs = librosa.feature.mfcc(y=audio_signal, sr=sample_rate, n_mfcc=n_mfcc)\n",
+    "#     return np.mean(mfccs.T, axis=0)  # Use the mean of MFCCs over time\n",
     "\n",
-    "def apply_laplacian_noise(audio_signal, epsilon):\n",
-    "    \"\"\"Apply Laplacian noise to the audio signal.\"\"\"\n",
-    "    sensitivity = 1\n",
-    "    scale = sensitivity / epsilon  # epsilon is the privacy parameter\n",
-    "    laplacian_noise = np.random.laplace(0, scale, len(audio_signal))\n",
-    "    noisy_signal = audio_signal + laplacian_noise\n",
-    "    return noisy_signal\n",
+    "# def apply_laplacian_noise(audio_signal, epsilon):\n",
+    "#     \"\"\"Apply Laplacian noise to the audio signal.\"\"\"\n",
+    "#     sensitivity = 1\n",
+    "#     scale = sensitivity / epsilon  # epsilon is the privacy parameter\n",
+    "#     laplacian_noise = np.random.laplace(0, scale, len(audio_signal))\n",
+    "#     noisy_signal = audio_signal + laplacian_noise\n",
+    "#     return noisy_signal\n",
     "\n",
-    "def load_data(dataset_path):\n",
-    "    X, y = [], []\n",
-    "    for phrase_type in [\"samePhrase\", \"differentPhrase\"]:\n",
-    "        phrase_path = os.path.join(dataset_path, phrase_type)\n",
-    "        if not os.path.exists(phrase_path):\n",
-    "            continue\n",
-    "        for speaker_id in os.listdir(phrase_path):\n",
-    "            speaker_path = os.path.join(phrase_path, speaker_id)\n",
-    "            if not os.path.isdir(speaker_path):\n",
-    "                continue\n",
-    "            for audio_file in os.listdir(speaker_path):\n",
-    "                if audio_file.endswith(\".flac\"):\n",
-    "                    file_path = os.path.join(speaker_path, audio_file)\n",
-    "                    features = extract_features(file_path)\n",
-    "                    if features is not None:\n",
-    "                        X.append(features)\n",
-    "                        y.append(speaker_id)  # Speaker ID is used as the label\n",
-    "    return np.array(X), np.array(y)\n",
+    "# def load_data(dataset_path):\n",
+    "#     X, y = [], []\n",
+    "#     for phrase_type in [\"samePhrase\", \"differentPhrase\"]:\n",
+    "#         phrase_path = os.path.join(dataset_path, phrase_type)\n",
+    "#         if not os.path.exists(phrase_path):\n",
+    "#             continue\n",
+    "#         for speaker_id in os.listdir(phrase_path):\n",
+    "#             speaker_path = os.path.join(phrase_path, speaker_id)\n",
+    "#             if not os.path.isdir(speaker_path):\n",
+    "#                 continue\n",
+    "#             for audio_file in os.listdir(speaker_path):\n",
+    "#                 if audio_file.endswith(\".flac\"):\n",
+    "#                     file_path = os.path.join(speaker_path, audio_file)\n",
+    "#                     features = extract_features(file_path)\n",
+    "#                     if features is not None:\n",
+    "#                         X.append(features)\n",
+    "#                         y.append(speaker_id)  # Speaker ID is used as the label\n",
+    "#     return np.array(X), np.array(y)\n",
     "\n",
-    "# Path to dataset\n",
-    "dataset_path = \"/kaggle/input/d/mdalhadikhan/a-dataset-for-voice-based-human-identity/zw4p4p7sdh-2\"\n",
-    "X, y = load_data(dataset_path)\n",
+    "# # Path to dataset\n",
+    "# dataset_path = \"/kaggle/input/d/mdalhadikhan/a-dataset-for-voice-based-human-identity/zw4p4p7sdh-2\"\n",
+    "# X, y = load_data(dataset_path)\n",
     "\n",
-    "# Apply Laplacian noise to the MFCC features\n",
-    "epsilon = .045  # Set the value of epsilon for Laplacian noise\n",
-    "X_noisy = np.array([apply_laplacian_noise(signal, epsilon) for signal in X])\n",
+    "# # Apply Laplacian noise to the MFCC features\n",
+    "# epsilon = .045  # Set the value of epsilon for Laplacian noise\n",
+    "# X_noisy = np.array([apply_laplacian_noise(signal, epsilon) for signal in X])\n",
     "\n",
-    "# Encode speaker IDs (labels) as integers\n",
-    "label_encoder = LabelEncoder()\n",
-    "y_encoded = label_encoder.fit_transform(y)\n",
+    "# # Encode speaker IDs (labels) as integers\n",
+    "# label_encoder = LabelEncoder()\n",
+    "# y_encoded = label_encoder.fit_transform(y)\n",
     "\n",
-    "# Split data into training and testing sets\n",
-    "X_train, X_test, y_train, y_test = train_test_split(X_noisy, y_encoded, test_size=0.2, random_state=42)\n",
+    "# # Split data into training and testing sets\n",
+    "# X_train, X_test, y_train, y_test = train_test_split(X_noisy, y_encoded, test_size=0.2, random_state=42)\n",
     "\n",
-    "# Define and train a Random Forest classifier\n",
-    "rf_model = RandomForestClassifier(n_estimators=100, random_state=42)\n",
-    "rf_model.fit(X_train, y_train)\n",
+    "# # Define and train a Random Forest classifier\n",
+    "# rf_model = RandomForestClassifier(n_estimators=100, random_state=42)\n",
+    "# rf_model.fit(X_train, y_train)\n",
     "\n",
-    "# Predict on the training set\n",
-    "y_train_pred = rf_model.predict(X_train)\n",
+    "# # Predict on the training set\n",
+    "# y_train_pred = rf_model.predict(X_train)\n",
     "\n",
-    "# Predict on the test set\n",
-    "y_test_pred = rf_model.predict(X_test)\n",
+    "# # Predict on the test set\n",
+    "# y_test_pred = rf_model.predict(X_test)\n",
     "\n",
-    "# Evaluate the model\n",
-    "train_accuracy = accuracy_score(y_train, y_train_pred)\n",
-    "test_accuracy = accuracy_score(y_test, y_test_pred)\n",
-    "precision, recall, f1, _ = precision_recall_fscore_support(y_test, y_test_pred, average='weighted')\n",
-    "conf_matrix = confusion_matrix(y_test, y_test_pred)\n",
+    "# # Evaluate the model\n",
+    "# train_accuracy = accuracy_score(y_train, y_train_pred)\n",
+    "# test_accuracy = accuracy_score(y_test, y_test_pred)\n",
+    "# precision, recall, f1, _ = precision_recall_fscore_support(y_test, y_test_pred, average='weighted')\n",
+    "# conf_matrix = confusion_matrix(y_test, y_test_pred)\n",
     "\n",
-    "print(f\"Training accuracy: {train_accuracy:.4f}\")\n",
-    "print(f\"Validation accuracy: {test_accuracy:.4f}\")\n",
-    "print(f\"Precision: {precision:.4f}\")\n",
-    "print(f\"Recall: {recall:.4f}\")\n",
-    "print(f\"F1 Score: {f1:.4f}\")\n",
+    "# print(f\"Training accuracy: {train_accuracy:.4f}\")\n",
+    "# print(f\"Validation accuracy: {test_accuracy:.4f}\")\n",
+    "# print(f\"Precision: {precision:.4f}\")\n",
+    "# print(f\"Recall: {recall:.4f}\")\n",
+    "# print(f\"F1 Score: {f1:.4f}\")\n",
     "\n",
-    "print(\"Confusion Matrix:\")\n",
-    "print(conf_matrix)\n"
+    "# print(\"Confusion Matrix:\")\n",
+    "# print(conf_matrix)\n"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "1c34b533",
+   "id": "b47c9567",
    "metadata": {
     "papermill": {
-     "duration": 0.006299,
-     "end_time": "2024-12-03T13:10:34.342035",
+     "duration": 0.006429,
+     "end_time": "2024-12-03T18:14:58.787824",
      "exception": false,
-     "start_time": "2024-12-03T13:10:34.335736",
+     "start_time": "2024-12-03T18:14:58.781395",
      "status": "completed"
     },
     "tags": []
@@ -323,148 +402,118 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "79ce0ccf",
+   "execution_count": 4,
+   "id": "504375b3",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:10:34.357978Z",
-     "iopub.status.busy": "2024-12-03T13:10:34.357507Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.499869Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.498475Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.803041Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.802336Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.810655Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.809231Z"
     },
     "papermill": {
-     "duration": 226.161345,
-     "end_time": "2024-12-03T13:14:20.510065",
+     "duration": 0.019049,
+     "end_time": "2024-12-03T18:14:58.813504",
      "exception": false,
-     "start_time": "2024-12-03T13:10:34.348720",
+     "start_time": "2024-12-03T18:14:58.794455",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Training accuracy: 1.0000\n",
-      "Validation accuracy: 0.0750\n",
-      "Precision: 0.0901\n",
-      "Recall: 0.0750\n",
-      "F1 Score: 0.0745\n",
-      "Confusion Matrix:\n",
-      "[[0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " ...\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]\n",
-      " [0 0 0 ... 0 0 0]]\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n",
-      "  _warn_prf(average, modifier, msg_start, len(result))\n",
-      "/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.\n",
-      "  _warn_prf(average, modifier, msg_start, len(result))\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
-    "import os\n",
-    "import numpy as np\n",
-    "import soundfile as sf\n",
-    "from sklearn.preprocessing import LabelEncoder\n",
-    "from sklearn.model_selection import train_test_split\n",
-    "from sklearn.ensemble import RandomForestClassifier\n",
-    "from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support\n",
-    "import librosa\n",
+    "# import os\n",
+    "# import numpy as np\n",
+    "# import soundfile as sf\n",
+    "# from sklearn.preprocessing import LabelEncoder\n",
+    "# from sklearn.model_selection import train_test_split\n",
+    "# from sklearn.ensemble import RandomForestClassifier\n",
+    "# from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support\n",
+    "# import librosa\n",
     "\n",
-    "def extract_features(file_path, n_mfcc=13):\n",
-    "    \"\"\"Extract MFCC features from an audio file.\"\"\"\n",
-    "    audio_signal, sample_rate = sf.read(file_path)\n",
-    "    mfccs = librosa.feature.mfcc(y=audio_signal, sr=sample_rate, n_mfcc=n_mfcc)\n",
-    "    return np.mean(mfccs.T, axis=0)  # Use the mean of MFCCs over time\n",
+    "# def extract_features(file_path, n_mfcc=13):\n",
+    "#     \"\"\"Extract MFCC features from an audio file.\"\"\"\n",
+    "#     audio_signal, sample_rate = sf.read(file_path)\n",
+    "#     mfccs = librosa.feature.mfcc(y=audio_signal, sr=sample_rate, n_mfcc=n_mfcc)\n",
+    "#     return np.mean(mfccs.T, axis=0)  # Use the mean of MFCCs over time\n",
     "\n",
-    "def apply_laplacian_noise(audio_signal, epsilon):\n",
-    "    \"\"\"Apply Laplacian noise to the audio signal.\"\"\"\n",
-    "    sensitivity = 1\n",
-    "    scale = sensitivity / epsilon  # epsilon is the privacy parameter\n",
-    "    laplacian_noise = np.random.laplace(0, scale, len(audio_signal))\n",
-    "    noisy_signal = audio_signal + laplacian_noise\n",
-    "    return noisy_signal\n",
+    "# def apply_laplacian_noise(audio_signal, epsilon):\n",
+    "#     \"\"\"Apply Laplacian noise to the audio signal.\"\"\"\n",
+    "#     sensitivity = 1\n",
+    "#     scale = sensitivity / epsilon  # epsilon is the privacy parameter\n",
+    "#     laplacian_noise = np.random.laplace(0, scale, len(audio_signal))\n",
+    "#     noisy_signal = audio_signal + laplacian_noise\n",
+    "#     return noisy_signal\n",
     "\n",
-    "def load_data(dataset_path):\n",
-    "    X, y = [], []\n",
-    "    for phrase_type in [\"samePhrase\", \"differentPhrase\"]:\n",
-    "        phrase_path = os.path.join(dataset_path, phrase_type)\n",
-    "        if not os.path.exists(phrase_path):\n",
-    "            continue\n",
-    "        for speaker_id in os.listdir(phrase_path):\n",
-    "            speaker_path = os.path.join(phrase_path, speaker_id)\n",
-    "            if not os.path.isdir(speaker_path):\n",
-    "                continue\n",
-    "            for audio_file in os.listdir(speaker_path):\n",
-    "                if audio_file.endswith(\".flac\"):\n",
-    "                    file_path = os.path.join(speaker_path, audio_file)\n",
-    "                    features = extract_features(file_path)\n",
-    "                    if features is not None:\n",
-    "                        X.append(features)\n",
-    "                        y.append(speaker_id)  # Speaker ID is used as the label\n",
-    "    return np.array(X), np.array(y)\n",
+    "# def load_data(dataset_path):\n",
+    "#     X, y = [], []\n",
+    "#     for phrase_type in [\"samePhrase\", \"differentPhrase\"]:\n",
+    "#         phrase_path = os.path.join(dataset_path, phrase_type)\n",
+    "#         if not os.path.exists(phrase_path):\n",
+    "#             continue\n",
+    "#         for speaker_id in os.listdir(phrase_path):\n",
+    "#             speaker_path = os.path.join(phrase_path, speaker_id)\n",
+    "#             if not os.path.isdir(speaker_path):\n",
+    "#                 continue\n",
+    "#             for audio_file in os.listdir(speaker_path):\n",
+    "#                 if audio_file.endswith(\".flac\"):\n",
+    "#                     file_path = os.path.join(speaker_path, audio_file)\n",
+    "#                     features = extract_features(file_path)\n",
+    "#                     if features is not None:\n",
+    "#                         X.append(features)\n",
+    "#                         y.append(speaker_id)  # Speaker ID is used as the label\n",
+    "#     return np.array(X), np.array(y)\n",
     "\n",
-    "# Path to dataset\n",
-    "dataset_path = \"/kaggle/input/d/mdalhadikhan/a-dataset-for-voice-based-human-identity/zw4p4p7sdh-2\"\n",
-    "X, y = load_data(dataset_path)\n",
+    "# # Path to dataset\n",
+    "# dataset_path = \"/kaggle/input/d/mdalhadikhan/a-dataset-for-voice-based-human-identity/zw4p4p7sdh-2\"\n",
+    "# X, y = load_data(dataset_path)\n",
     "\n",
-    "# Apply Laplacian noise to the MFCC features\n",
-    "epsilon = .048  # Set the value of epsilon for Laplacian noise\n",
-    "X_noisy = np.array([apply_laplacian_noise(signal, epsilon) for signal in X])\n",
+    "# # Apply Laplacian noise to the MFCC features\n",
+    "# epsilon = .048  # Set the value of epsilon for Laplacian noise\n",
+    "# X_noisy = np.array([apply_laplacian_noise(signal, epsilon) for signal in X])\n",
     "\n",
-    "# Encode speaker IDs (labels) as integers\n",
-    "label_encoder = LabelEncoder()\n",
-    "y_encoded = label_encoder.fit_transform(y)\n",
+    "# # Encode speaker IDs (labels) as integers\n",
+    "# label_encoder = LabelEncoder()\n",
+    "# y_encoded = label_encoder.fit_transform(y)\n",
     "\n",
-    "# Split data into training and testing sets\n",
-    "X_train, X_test, y_train, y_test = train_test_split(X_noisy, y_encoded, test_size=0.2, random_state=42)\n",
+    "# # Split data into training and testing sets\n",
+    "# X_train, X_test, y_train, y_test = train_test_split(X_noisy, y_encoded, test_size=0.2, random_state=42)\n",
     "\n",
-    "# Define and train a Random Forest classifier\n",
-    "rf_model = RandomForestClassifier(n_estimators=100, random_state=42)\n",
-    "rf_model.fit(X_train, y_train)\n",
+    "# # Define and train a Random Forest classifier\n",
+    "# rf_model = RandomForestClassifier(n_estimators=100, random_state=42)\n",
+    "# rf_model.fit(X_train, y_train)\n",
     "\n",
-    "# Predict on the training set\n",
-    "y_train_pred = rf_model.predict(X_train)\n",
+    "# # Predict on the training set\n",
+    "# y_train_pred = rf_model.predict(X_train)\n",
     "\n",
-    "# Predict on the test set\n",
-    "y_test_pred = rf_model.predict(X_test)\n",
+    "# # Predict on the test set\n",
+    "# y_test_pred = rf_model.predict(X_test)\n",
     "\n",
-    "# Evaluate the model\n",
-    "train_accuracy = accuracy_score(y_train, y_train_pred)\n",
-    "test_accuracy = accuracy_score(y_test, y_test_pred)\n",
-    "precision, recall, f1, _ = precision_recall_fscore_support(y_test, y_test_pred, average='weighted')\n",
-    "conf_matrix = confusion_matrix(y_test, y_test_pred)\n",
+    "# # Evaluate the model\n",
+    "# train_accuracy = accuracy_score(y_train, y_train_pred)\n",
+    "# test_accuracy = accuracy_score(y_test, y_test_pred)\n",
+    "# precision, recall, f1, _ = precision_recall_fscore_support(y_test, y_test_pred, average='weighted')\n",
+    "# conf_matrix = confusion_matrix(y_test, y_test_pred)\n",
     "\n",
-    "print(f\"Training accuracy: {train_accuracy:.4f}\")\n",
-    "print(f\"Validation accuracy: {test_accuracy:.4f}\")\n",
-    "print(f\"Precision: {precision:.4f}\")\n",
-    "print(f\"Recall: {recall:.4f}\")\n",
-    "print(f\"F1 Score: {f1:.4f}\")\n",
+    "# print(f\"Training accuracy: {train_accuracy:.4f}\")\n",
+    "# print(f\"Validation accuracy: {test_accuracy:.4f}\")\n",
+    "# print(f\"Precision: {precision:.4f}\")\n",
+    "# print(f\"Recall: {recall:.4f}\")\n",
+    "# print(f\"F1 Score: {f1:.4f}\")\n",
     "\n",
-    "print(\"Confusion Matrix:\")\n",
-    "print(conf_matrix)\n"
+    "# print(\"Confusion Matrix:\")\n",
+    "# print(conf_matrix)\n"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "8211f65f",
+   "id": "74147a96",
    "metadata": {
     "papermill": {
-     "duration": 0.006525,
-     "end_time": "2024-12-03T13:14:20.523759",
+     "duration": 0.006613,
+     "end_time": "2024-12-03T18:14:58.827659",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.517234",
+     "start_time": "2024-12-03T18:14:58.821046",
      "status": "completed"
     },
     "tags": []
@@ -475,20 +524,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
-   "id": "90956ea6",
+   "execution_count": 5,
+   "id": "d6f3bf04",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.539460Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.538950Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.546702Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.545422Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.847566Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.846286Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.855258Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.854175Z"
     },
     "papermill": {
-     "duration": 0.018516,
-     "end_time": "2024-12-03T13:14:20.549047",
+     "duration": 0.02317,
+     "end_time": "2024-12-03T18:14:58.857916",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.530531",
+     "start_time": "2024-12-03T18:14:58.834746",
      "status": "completed"
     },
     "tags": []
@@ -568,20 +617,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
-   "id": "6e4cf488",
+   "execution_count": 6,
+   "id": "1d1b910d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.565512Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.564277Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.570773Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.569414Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.874212Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.873701Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.880309Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.879184Z"
     },
     "papermill": {
-     "duration": 0.01702,
-     "end_time": "2024-12-03T13:14:20.573092",
+     "duration": 0.017163,
+     "end_time": "2024-12-03T18:14:58.882491",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.556072",
+     "start_time": "2024-12-03T18:14:58.865328",
      "status": "completed"
     },
     "tags": []
@@ -622,20 +671,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "2adf2b49",
+   "execution_count": 7,
+   "id": "1264c29d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.588804Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.588435Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.594153Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.592926Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.899413Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.898336Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.904831Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.903782Z"
     },
     "papermill": {
-     "duration": 0.016785,
-     "end_time": "2024-12-03T13:14:20.596662",
+     "duration": 0.017123,
+     "end_time": "2024-12-03T18:14:58.907070",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.579877",
+     "start_time": "2024-12-03T18:14:58.889947",
      "status": "completed"
     },
     "tags": []
@@ -671,20 +720,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
-   "id": "09927cd1",
+   "execution_count": 8,
+   "id": "3002f7ed",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.612015Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.611653Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.618291Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.616957Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.923926Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.922790Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.931090Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.929813Z"
     },
     "papermill": {
-     "duration": 0.017494,
-     "end_time": "2024-12-03T13:14:20.620956",
+     "duration": 0.01903,
+     "end_time": "2024-12-03T18:14:58.933276",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.603462",
+     "start_time": "2024-12-03T18:14:58.914246",
      "status": "completed"
     },
     "tags": []
@@ -744,20 +793,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
-   "id": "8d9055a7",
+   "execution_count": 9,
+   "id": "e7736420",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.636215Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.635850Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.641606Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.640008Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.949080Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.948548Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.954174Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.953054Z"
     },
     "papermill": {
-     "duration": 0.016772,
-     "end_time": "2024-12-03T13:14:20.644554",
+     "duration": 0.016408,
+     "end_time": "2024-12-03T18:14:58.956677",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.627782",
+     "start_time": "2024-12-03T18:14:58.940269",
      "status": "completed"
     },
     "tags": []
@@ -769,20 +818,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
-   "id": "282f4e26",
+   "execution_count": 10,
+   "id": "270ac82e",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.662157Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.661128Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.669003Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.667677Z"
+     "iopub.execute_input": "2024-12-03T18:14:58.981332Z",
+     "iopub.status.busy": "2024-12-03T18:14:58.980182Z",
+     "iopub.status.idle": "2024-12-03T18:14:58.987439Z",
+     "shell.execute_reply": "2024-12-03T18:14:58.986013Z"
     },
     "papermill": {
-     "duration": 0.019427,
-     "end_time": "2024-12-03T13:14:20.671458",
+     "duration": 0.020963,
+     "end_time": "2024-12-03T18:14:58.990166",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.652031",
+     "start_time": "2024-12-03T18:14:58.969203",
      "status": "completed"
     },
     "tags": []
@@ -857,20 +906,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
-   "id": "c0852fe2",
+   "execution_count": 11,
+   "id": "df5a962d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.688362Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.687586Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.694044Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.692668Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.011120Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.010727Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.017784Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.016627Z"
     },
     "papermill": {
-     "duration": 0.017775,
-     "end_time": "2024-12-03T13:14:20.696538",
+     "duration": 0.017504,
+     "end_time": "2024-12-03T18:14:59.020012",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.678763",
+     "start_time": "2024-12-03T18:14:59.002508",
      "status": "completed"
     },
     "tags": []
@@ -921,20 +970,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
-   "id": "c3006554",
+   "execution_count": 12,
+   "id": "93e1c81a",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.712651Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.712160Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.718982Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.717791Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.035962Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.035566Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.041745Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.040665Z"
     },
     "papermill": {
-     "duration": 0.017991,
-     "end_time": "2024-12-03T13:14:20.721580",
+     "duration": 0.017165,
+     "end_time": "2024-12-03T18:14:59.044440",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.703589",
+     "start_time": "2024-12-03T18:14:59.027275",
      "status": "completed"
     },
     "tags": []
@@ -1009,20 +1058,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
-   "id": "3da1929f",
+   "execution_count": 13,
+   "id": "7638a76a",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.737482Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.736982Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.744491Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.743082Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.068701Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.068178Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.076593Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.075445Z"
     },
     "papermill": {
-     "duration": 0.018434,
-     "end_time": "2024-12-03T13:14:20.746888",
+     "duration": 0.022213,
+     "end_time": "2024-12-03T18:14:59.079102",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.728454",
+     "start_time": "2024-12-03T18:14:59.056889",
      "status": "completed"
     },
     "tags": []
@@ -1105,20 +1154,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
-   "id": "ded04c86",
+   "execution_count": 14,
+   "id": "11035e85",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.762602Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.762100Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.768077Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.766634Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.094344Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.093948Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.100826Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.098123Z"
     },
     "papermill": {
-     "duration": 0.017138,
-     "end_time": "2024-12-03T13:14:20.770831",
+     "duration": 0.017601,
+     "end_time": "2024-12-03T18:14:59.103682",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.753693",
+     "start_time": "2024-12-03T18:14:59.086081",
      "status": "completed"
     },
     "tags": []
@@ -1140,13 +1189,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "132e2825",
+   "id": "ad253fe4",
    "metadata": {
     "papermill": {
-     "duration": 0.006438,
-     "end_time": "2024-12-03T13:14:20.784149",
+     "duration": 0.007007,
+     "end_time": "2024-12-03T18:14:59.121655",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.777711",
+     "start_time": "2024-12-03T18:14:59.114648",
      "status": "completed"
     },
     "tags": []
@@ -1157,20 +1206,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "id": "fea610ea",
+   "execution_count": 15,
+   "id": "6f531403",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.801013Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.799631Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.808968Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.807664Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.137302Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.136899Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.144302Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.143136Z"
     },
     "papermill": {
-     "duration": 0.021026,
-     "end_time": "2024-12-03T13:14:20.811804",
+     "duration": 0.018133,
+     "end_time": "2024-12-03T18:14:59.146662",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.790778",
+     "start_time": "2024-12-03T18:14:59.128529",
      "status": "completed"
     },
     "tags": []
@@ -1264,20 +1313,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
-   "id": "79da0481",
+   "execution_count": 16,
+   "id": "dea4f221",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.828122Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.827632Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.833384Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.832152Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.162296Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.161805Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.167587Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.166459Z"
     },
     "papermill": {
-     "duration": 0.016844,
-     "end_time": "2024-12-03T13:14:20.835962",
+     "duration": 0.016577,
+     "end_time": "2024-12-03T18:14:59.170161",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.819118",
+     "start_time": "2024-12-03T18:14:59.153584",
      "status": "completed"
     },
     "tags": []
@@ -1298,20 +1347,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
-   "id": "f6feb2cc",
+   "execution_count": 17,
+   "id": "4a58c7e7",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.851705Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.851200Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.856888Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.855456Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.190961Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.190552Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.195604Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.194389Z"
     },
     "papermill": {
-     "duration": 0.016705,
-     "end_time": "2024-12-03T13:14:20.859445",
+     "duration": 0.015552,
+     "end_time": "2024-12-03T18:14:59.197759",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.842740",
+     "start_time": "2024-12-03T18:14:59.182207",
      "status": "completed"
     },
     "tags": []
@@ -1324,13 +1373,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "23cebc0c",
+   "id": "37cebe5f",
    "metadata": {
     "papermill": {
-     "duration": 0.007741,
-     "end_time": "2024-12-03T13:14:20.873953",
+     "duration": 0.006651,
+     "end_time": "2024-12-03T18:14:59.211456",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.866212",
+     "start_time": "2024-12-03T18:14:59.204805",
      "status": "completed"
     },
     "tags": []
@@ -1341,20 +1390,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
-   "id": "637396b2",
+   "execution_count": 18,
+   "id": "b8e300fe",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.892285Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.891698Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.900034Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.898454Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.227239Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.226842Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.233896Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.232834Z"
     },
     "papermill": {
-     "duration": 0.021093,
-     "end_time": "2024-12-03T13:14:20.902804",
+     "duration": 0.017791,
+     "end_time": "2024-12-03T18:14:59.236108",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.881711",
+     "start_time": "2024-12-03T18:14:59.218317",
      "status": "completed"
     },
     "tags": []
@@ -1435,20 +1484,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
-   "id": "8cb0d751",
+   "execution_count": 19,
+   "id": "6c231f0a",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.918562Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.918064Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.924270Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.922835Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.252555Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.251440Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.256701Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.255717Z"
     },
     "papermill": {
-     "duration": 0.017522,
-     "end_time": "2024-12-03T13:14:20.927147",
+     "duration": 0.01577,
+     "end_time": "2024-12-03T18:14:59.258909",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.909625",
+     "start_time": "2024-12-03T18:14:59.243139",
      "status": "completed"
     },
     "tags": []
@@ -1466,20 +1515,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
-   "id": "83d2ce9c",
+   "execution_count": 20,
+   "id": "926403f2",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.944235Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.943862Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.950827Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.949400Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.278515Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.278019Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.288503Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.287409Z"
     },
     "papermill": {
-     "duration": 0.018679,
-     "end_time": "2024-12-03T13:14:20.953695",
+     "duration": 0.024722,
+     "end_time": "2024-12-03T18:14:59.290727",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.935016",
+     "start_time": "2024-12-03T18:14:59.266005",
      "status": "completed"
     },
     "tags": []
@@ -1542,20 +1591,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
-   "id": "74042f6b",
+   "execution_count": 21,
+   "id": "63f7f210",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.969782Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.969388Z",
-     "iopub.status.idle": "2024-12-03T13:14:20.975136Z",
-     "shell.execute_reply": "2024-12-03T13:14:20.973647Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.306571Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.306132Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.310952Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.309860Z"
     },
     "papermill": {
-     "duration": 0.016841,
-     "end_time": "2024-12-03T13:14:20.977833",
+     "duration": 0.014961,
+     "end_time": "2024-12-03T18:14:59.312832",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.960992",
+     "start_time": "2024-12-03T18:14:59.297871",
      "status": "completed"
     },
     "tags": []
@@ -1567,20 +1616,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
-   "id": "679693fd",
+   "execution_count": 22,
+   "id": "2f6b0b98",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-12-03T13:14:20.995063Z",
-     "iopub.status.busy": "2024-12-03T13:14:20.994653Z",
-     "iopub.status.idle": "2024-12-03T13:14:21.004099Z",
-     "shell.execute_reply": "2024-12-03T13:14:21.002631Z"
+     "iopub.execute_input": "2024-12-03T18:14:59.340565Z",
+     "iopub.status.busy": "2024-12-03T18:14:59.339389Z",
+     "iopub.status.idle": "2024-12-03T18:14:59.348838Z",
+     "shell.execute_reply": "2024-12-03T18:14:59.347703Z"
     },
     "papermill": {
-     "duration": 0.021458,
-     "end_time": "2024-12-03T13:14:21.006680",
+     "duration": 0.029447,
+     "end_time": "2024-12-03T18:14:59.351750",
      "exception": false,
-     "start_time": "2024-12-03T13:14:20.985222",
+     "start_time": "2024-12-03T18:14:59.322303",
      "status": "completed"
     },
     "tags": []
@@ -1795,14 +1844,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 722.760893,
-   "end_time": "2024-12-03T13:14:22.440835",
+   "duration": 558.089417,
+   "end_time": "2024-12-03T18:15:00.286952",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2024-12-03T13:02:19.679942",
+   "start_time": "2024-12-03T18:05:42.197535",
    "version": "2.6.0"
   }
  },
